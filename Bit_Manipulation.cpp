@@ -51,6 +51,16 @@ string IsPowerOf4(int n) {
     // return IsPowerOf2(n & mask);
 }
 
+// Approach - Each step clears LSB
+int CountSetBits(int n) {
+    int cnt = 0;
+    while (n) {
+        n &= (n - 1);
+        cnt++;
+    }
+    return cnt;
+}
+
 int main() {
     // cout << EvenOrOdd(1) << ' ' << EvenOrOdd(2) << endl;
 
@@ -63,5 +73,6 @@ int main() {
     // cout << IsPowerOf2(0) << ' ' << IsPowerOf2(1) << ' ' << IsPowerOf2(2) << ' ' << IsPowerOf2(3) << endl;
     // cout << IsPowerOf4(0) << ' ' << IsPowerOf4(1) << ' ' << IsPowerOf4(2) << ' ' << IsPowerOf4(4) << endl;
 
+    // cout << CountSetBits(15) << ' ' << CountSetBits(9) << endl;
     return 0;
 }
