@@ -61,6 +61,64 @@ int CountSetBits(int n) {
     return cnt;
 }
 
+// FAQ of Bit Manipulation
+// {1, 2, 2, 3, 3}
+int Unique_In_2n_1(vector <int> vec) {
+    int unique = 0;
+    for (int &i : vec) {
+        unique ^= i;
+    }
+    return unique;
+}
+
+// {1, 2, 2, 3, 3, 4, 5, 5}
+pair <int, int> Unique_In_2n_2(vector <int> vec) {
+    // Getting XOR of 2 numbers in _xor
+    int _xor = 0;
+    for (int &i : vec) {
+        _xor ^= i;
+    }
+
+    // Finding LSB in _xor
+    int lsb = 0;
+    for (int i = 0; i < 32; i++) {
+        int mask = 1LL << i;
+        if (_xor & mask) {
+            lsb = mask;
+            break;
+        }
+    }
+
+    // Getting XOR's of no having lsb as setbit to get first unique no
+    int firstUnique = _xor;
+    for (int &i : vec) {
+        if (i & lsb) {
+            firstUnique ^= i;
+        }
+    }
+
+    int secondUnique = (firstUnique ^ _xor);
+    return {firstUnique, secondUnique};    
+}
+
+// {1, 1, 1, 2, 2, 2, 3, 3, 3, 4}
+int Unique_In_3n_1(vector <int> vec) {
+    int uniq = 0;
+    for (int i = 0; i < 32; i++) {
+        int setBitCount = 0;
+
+        int mask = 1LL << i;
+        for (int &j : vec) {
+            setBitCount += (j & mask) > 0;
+        }
+
+        if (setBitCount % 3) {
+            uniq |= mask;
+        }
+    }
+    return uniq;
+}
+
 int main() {
     // cout << EvenOrOdd(1) << ' ' << EvenOrOdd(2) << endl;
 
@@ -74,5 +132,13 @@ int main() {
     // cout << IsPowerOf4(0) << ' ' << IsPowerOf4(1) << ' ' << IsPowerOf4(2) << ' ' << IsPowerOf4(4) << endl;
 
     // cout << CountSetBits(15) << ' ' << CountSetBits(9) << endl;
+
+    //cout << Unique_In_2n_1({1, 1, 2, 2, 3, 4, 4}) << ' ' << Unique_In_2n_1({1, 1, 2, 3, 3, 4, 4}) << endl;
+
+    // pair <int, int> uniqPair = Unique_In_2n_2({1, 2, 2, 3, 3, 4, 5, 5});
+    // cout << uniqPair.first << ' ' << uniqPair.second << endl;
+
+    // cout << Unique_In_3n_1({1, 1, 1, 2, 2, 2, 3, 3, 3, 4}) << endl;
+
     return 0;
 }
