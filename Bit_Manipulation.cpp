@@ -119,6 +119,22 @@ int Unique_In_3n_1(vector <int> vec) {
     return uniq;
 }
 
+// Printing All subsequences using Bit-Masking
+void PrintAllSubsequencesUsingBits(string s) {
+    int sSize = s.size();
+    int maskSize = (1LL << sSize);
+    for (int mask = 0; mask < maskSize; mask++) {
+        string word;
+        for (int j = 0; j < sSize; j++) {
+            int subMask = (mask & (1LL << j));
+            if (subMask) {
+                word.push_back(s[j]);
+            }
+        }
+        cout << word << endl;
+    }
+}
+
 int main() {
     // cout << EvenOrOdd(1) << ' ' << EvenOrOdd(2) << endl;
 
@@ -139,6 +155,8 @@ int main() {
     // cout << uniqPair.first << ' ' << uniqPair.second << endl;
 
     // cout << Unique_In_3n_1({1, 1, 1, 2, 2, 2, 3, 3, 3, 4}) << endl;
+
+    PrintAllSubsequencesUsingBits("abc");
 
     return 0;
 }
